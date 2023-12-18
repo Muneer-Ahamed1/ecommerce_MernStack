@@ -3,7 +3,11 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      gridTemplateRows: {
+        '[auto,auto,1fr]': 'auto auto 1fr',
+      },
       screens: {
+        'least':'320px',
         'sm': '640px',
         // => @media (min-width: 640px) { ... }
   
@@ -22,7 +26,8 @@ export default {
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
+    require("@tailwindcss/forms"), 
+
   ],
 }
 

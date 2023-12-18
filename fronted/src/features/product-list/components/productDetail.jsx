@@ -1,171 +1,351 @@
-import React from 'react'
 
-export default function ProductOverview() {
+import { useEffect, useState } from 'react'
+import { StarIcon } from '@heroicons/react/20/solid'
+import { RadioGroup } from '@headlessui/react'
+import { useParams } from 'react-router-dom'
+import {fetchProductDetailAsync} from "../productListSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartAsync } from '../../cart/cartSlice';
+const product = {
+  name: 'Basic Tee 6-Pack',
+  price: '$192',
+  href: '#',
+  breadcrumbs: [
+    { id: 1, name: 'Men', href: '#' },
+    { id: 2, name: 'Clothing', href: '#' },
+  ],
+  images: [
+    {
+      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
+      alt: 'Two each of gray, white, and black shirts laying flat.',
+    },
+    {
+      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
+      alt: 'Model wearing plain black basic tee.',
+    },
+    {
+      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
+      alt: 'Model wearing plain gray basic tee.',
+    },
+    {
+      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
+      alt: 'Model wearing plain white basic tee.',
+    },
+  ],
+  colors: [
+    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
+    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
+    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
+  ],
+  sizes: [
+    { name: 'XXS', inStock: false },
+    { name: 'XS', inStock: true },
+    { name: 'S', inStock: true },
+    { name: 'M', inStock: true },
+    { name: 'L', inStock: true },
+    { name: 'XL', inStock: true },
+    { name: '2XL', inStock: true },
+    { name: '3XL', inStock: true },
+  ],
+  description:
+    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
+  highlights: [
+    'Hand cut and sewn locally',
+    'Dyed with our proprietary colors',
+    'Pre-washed & pre-shrunk',
+    'Ultra-soft 100% cotton',
+  ],
+  details:
+    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+}
+const reviews = { href: '#', average: 4, totalCount: 117 }
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+export default function Example() {
+  const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const params=useParams();
+  const dispatch=useDispatch();
+
+  
+  useEffect(()=>{
+    const productId=params.id;
+    console.log(productId);
+    dispatch(fetchProductDetailAsync(productId))
+  },[params])
+
+  const productDetail=useSelector((state)=>state.Products.productDetail);
+  const user = useSelector((state)=>state.Auth.isLoginUser) 
+  
+
+
+if(productDetail) {
+  const {id,title,description,price,discountPercentage,brand,category,images}=productDetail;
+
+
+  function handleCart() {
+    let dump={...productDetail};
+    delete dump['id']
+    let item={...dump,quantity:1,user:user.id}
+    console.log(item);
+    dispatch(addToCartAsync(item))
+  }
+
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-8 2xl:px-16">
-      <div className="pt-8">
-        <div className="flex items-center">
-          <ol className="flex w-full items-center overflow-hidden">
-            <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
-              <a href="#">Home</a>
-            </li>
-            <li className="text-body mt-0.5 text-base">/</li>
-            <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
-              <a className="capitalize" href="#">
-                products
-              </a>
-            </li>
-            <li className="text-body mt-0.5 text-base">/</li>
-            <li className="text-body hover:text-heading px-2.5 text-sm transition duration-200 ease-in first:pl-0 last:pr-0">
-              <a className="capitalize" href="#">
-                Nike Shoes
+    <div className="bg-white">
+      <div className="pt-6">
+        <nav aria-label="Breadcrumb">
+          <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            {product.breadcrumbs.map((breadcrumb) => (
+              <li key={breadcrumb.id}>
+                <div className="flex items-center">
+                  <a href={breadcrumb.href} className="mr-2 text-sm font-medium text-gray-900">
+                    {breadcrumb.name}
+                  </a>
+                  <svg
+                    width={16}
+                    height={20}
+                    viewBox="0 0 16 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    className="h-5 w-4 text-gray-300"
+                  >
+                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                  </svg>
+                </div>
+              </li>
+            ))}
+
+
+
+
+            
+            <li className="text-sm">
+              <a href={product.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+                {title}
               </a>
             </li>
           </ol>
-        </div>
-      </div>
-      <div className="block grid-cols-9 items-start gap-x-10 pb-10 pt-7 lg:grid lg:pb-14 xl:gap-x-14 2xl:pb-20">
-        <div className="col-span-5 grid grid-cols-2 gap-2.5">
-          {Array.from({ length: 4 }, (_, i) => (
-            <div key={i} className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+        </nav>
+
+        {/* Image gallery */}
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+          <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+            <img
+              src={images[0]}
+            
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+            <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
               <img
-                src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c2hvZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
-                alt="Nike Air Max 95 By You--0"
-                className="w-full object-cover"
+                src={images[1]}
+                
+                className="h-full w-full object-cover object-center"
               />
             </div>
-          ))}
+            <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+              <img
+                src={images[2]}
+                
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
+          </div>
+          <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+            <img
+              src={images[3]}
+              
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
         </div>
-        <div className="col-span-4 pt-8 lg:pt-0">
-          <div className="mb-7 border-b border-gray-300 pb-7">
-            <h2 className="text-heading mb-3.5 text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl">
-              Nike Air Max 95 By You
-            </h2>
-            <p className="text-body text-sm leading-6  lg:text-base lg:leading-8">
-              The Nike Air Max 95 By You lets you take inspiration from the human body itself. The
-              midsole represents the spine, graduated panels are the muscles, the lace loops are the
-              shoe&apos;s ribs and the mesh in the upper is the skin.
-            </p>
-            <div className="mt-5 flex items-center ">
-              <div className="text-heading pr-2 text-base font-bold md:pr-0 md:text-xl lg:pr-2 lg:text-2xl 2xl:pr-0 2xl:text-4xl">
-                $40.00
+
+        {/* Product info */}
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+          </div>
+
+          {/* Options */}
+          <div className="mt-4 lg:row-span-3 lg:mt-0">
+            <h2 className="sr-only">Product information</h2>
+            <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
+
+            {/* Reviews */}
+            <div className="mt-6">
+              <h3 className="sr-only">Reviews</h3>
+              <div className="flex items-center">
+                <div className="flex items-center">
+                  {[0, 1, 2, 3, 4].map((rating) => (
+                    <StarIcon
+                      key={rating}
+                      className={classNames(
+                        reviews.average > rating ? 'text-gray-900' : 'text-gray-200',
+                        'h-5 w-5 flex-shrink-0'
+                      )}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <p className="sr-only">{reviews.average} out of 5 stars</p>
+                <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                  {reviews.totalCount} reviews
+                </a>
               </div>
-              <span className="font-segoe pl-2 text-sm text-gray-400 line-through md:text-base lg:text-lg xl:text-xl">
-                $50.00
-              </span>
             </div>
-          </div>
-          <div className="border-b border-gray-300 pb-3  ">
-            <div className="mb-4">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                size
-              </h3>
-              <ul className="colors -mr-3 flex flex-wrap">
-                {['S', 'M', 'L', 'XL'].map((size) => (
-                  <li
-                    key={size}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm "
-                  >
-                    {size}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mb-4 ">
-              <h3 className="text-heading mb-2.5 text-base font-semibold capitalize md:text-lg">
-                color
-              </h3>
-              <ul className="colors -mr-3 flex flex-wrap">
-                {['bg-orange-400', 'bg-pink-400', 'bg-violet-600', 'bg-red-500'].map((color) => (
-                  <li
-                    key={color}
-                    className="text-heading mb-2 mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-gray-100 p-1 text-xs font-semibold uppercase transition duration-200 ease-in-out hover:border-black md:mb-3 md:mr-3 md:h-11 md:w-11 md:text-sm"
-                  >
-                    <span className={`block h-full w-full rounded ${color}`} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="space-s-4 3xl:pr-48 flex items-center gap-2 border-b border-gray-300 py-8  md:pr-32 lg:pr-12 2xl:pr-32">
-            <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-gray-300 md:h-12">
+
+            <div className="mt-10">
+              {/* Colors */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900">Color</h3>
+
+                <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
+                  <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
+                  <div className="flex items-center space-x-3">
+                    {product.colors.map((color) => (
+                      <RadioGroup.Option
+                        key={color.name}
+                        value={color}
+                        className={({ active, checked }) =>
+                          classNames(
+                            color.selectedClass,
+                            active && checked ? 'ring ring-offset-1' : '',
+                            !active && checked ? 'ring-2' : '',
+                            'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
+                          )
+                        }
+                      >
+                        <RadioGroup.Label as="span" className="sr-only">
+                          {color.name}
+                        </RadioGroup.Label>
+                        <span
+                          aria-hidden="true"
+                          className={classNames(
+                            color.class,
+                            'h-8 w-8 rounded-full border border-black border-opacity-10'
+                          )}
+                        />
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Sizes */}
+              <div className="mt-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
+                  <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                    Size guide
+                  </a>
+                </div>
+
+                <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
+                  <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
+                  <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
+                    {product.sizes.map((size) => (
+                      <RadioGroup.Option
+                        key={size.name}
+                        value={size}
+                        disabled={!size.inStock}
+                        className={({ active }) =>
+                          classNames(
+                            size.inStock
+                              ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
+                              : 'cursor-not-allowed bg-gray-50 text-gray-200',
+                            active ? 'ring-2 ring-indigo-500' : '',
+                            'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
+                          )
+                        }
+                      >
+                        {({ active, checked }) => (
+                          <>
+                            <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
+                            {size.inStock ? (
+                              <span
+                                className={classNames(
+                                  active ? 'border' : 'border-2',
+                                  checked ? 'border-indigo-500' : 'border-transparent',
+                                  'pointer-events-none absolute -inset-px rounded-md'
+                                )}
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              <span
+                                aria-hidden="true"
+                                className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
+                              >
+                                <svg
+                                  className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
+                                  viewBox="0 0 100 100"
+                                  preserveAspectRatio="none"
+                                  stroke="currentColor"
+                                >
+                                  <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
+                                </svg>
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
               <button
-                className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-e border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12"
-                disabled
+                
+                onClick={()=>{handleCart()}}
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                +
-              </button>
-              <span className="duration-250 text-heading flex h-full w-12  flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out  md:w-20 xl:w-24">
-                1
-              </span>
-              <button className="text-heading hover:bg-heading flex h-full w-10 flex-shrink-0 items-center justify-center border-s border-gray-300 transition duration-300 ease-in-out focus:outline-none md:w-12">
-                -
+                Add to cart
               </button>
             </div>
-            <button
-              type="button"
-              className="h-11 w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
-              Add to cart
-            </button>
           </div>
-          <div className="py-6 ">
-            <ul className="space-y-5 pb-1 text-sm">
-              <li>
-                <span className="text-heading inline-block pr-2 font-semibold">SKU:</span>
-                N/A
-              </li>
-              <li>
-                <span className="text-heading inline-block pr-2 font-semibold">Category:</span>
-                <a className="hover:text-heading transition hover:underline" href="#">
-                  kids
-                </a>
-              </li>
-              <li className="productTags">
-                <span className="text-heading inline-block pr-2 font-semibold">Tags:</span>
-                <a
-                  className="hover:text-heading inline-block pr-1.5 transition last:pr-0 hover:underline"
-                  href="#"
-                >
-                  Sneakers
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="shadow-sm ">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
-              <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
-                Product Details
-              </h2>
-              <div className="relative flex h-4 w-4 flex-shrink-0 items-center justify-center">
-                <div className="bg-heading h-0.5 w-full rounded-sm" />
-                <div className="bg-heading absolute bottom-0 h-full w-0.5 origin-bottom scale-0 transform rounded-sm transition-transform duration-500 ease-in-out" />
-              </div>
-            </header>
+
+          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            {/* Description and details */}
             <div>
-              <div className="pb-6 text-sm leading-7 text-gray-600 md:pb-7">
-                Our Customer Experience Team is available 7 days a week and we offer 2 ways to get
-                in contact.Email and Chat . We try to reply quickly, so you need not to wait too
-                long for a response!.
+              <h3 className="sr-only">Description</h3>
+
+              <div className="space-y-6">
+                <p className="text-base text-gray-900">{product.description}</p>
               </div>
             </div>
-          </div>
-          <div className="">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
-              <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
-                Additional Information
-              </h2>
-            </header>
-          </div>
-          <div className="">
-            <header className="flex cursor-pointer items-center justify-between border-t border-gray-300 py-5 transition-colors md:py-6">
-              <h2 className="text-heading pr-2 text-sm font-semibold leading-relaxed md:text-base lg:text-lg">
-                Customer Reviews
-              </h2>
-            </header>
+
+            <div className="mt-10">
+              <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
+
+              <div className="mt-4">
+                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
+                  {product.highlights.map((highlight) => (
+                    <li key={highlight} className="text-gray-400">
+                      <span className="text-gray-600">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <h2 className="text-sm font-medium text-gray-900">Details</h2>
+
+              <div className="mt-4 space-y-6">
+                <p className="text-sm text-gray-600">{product.details}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
+}
+else{
+  return <h1>Loading</h1>
+}
 }

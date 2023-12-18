@@ -1,34 +1,22 @@
-import React from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import formatPrice from "../../../formalPrice"
+import { Link } from "react-router-dom"
+export default function Product({id,title,thumbnail,rating,images,category,discountPercentage,stock,price,data}) {
+    return (
+        <Link className="product h-[30vh]" to={`/detail/${id}`} >
+        <div className="border-2 border-slate-100 p-2 rounded-md h-[100%] ">
+            <div className="card h-[100%]">
+                <div className="img relative h-[80%]">
+                    <img src={thumbnail} alt="NOT FOUND" className="h-[100%] w-[100%] object-cover"/>
+                    <h1 className="absolute top-3 right-1 bg-slate-50 px-4 py-2 rounded-full">{category}</h1>
+                </div>
+                <div className="data flex justify-between p-2">
+                    <h1 className=" text-base">{title}</h1>
+                    <h2>{formatPrice(price)}</h2>
 
-export default function Card() {
-  return (
-    <div className="w-[300px] rounded-md border">
-      <img
-        src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
-        alt="Laptop"
-        className="h-[200px] w-full rounded-t-md object-cover"
-      />
-      <div className="p-4">
-        <h1 className="inline-flex items-center text-lg font-semibold">
-          About Macbook &nbsp; <ArrowUpRight className="h-4 w-4" />
-        </h1>
-        <p className="mt-3 text-sm text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, debitis?
-        </p>
-        <div className="mt-4">
-          <span className="mb-2 mr-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-gray-900">
-            #Macbook
-          </span>
-          <span className="mb-2 mr-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-gray-900">
-            #Apple
-          </span>
-          <span className="mb-2 mr-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-gray-900">
-            #Laptop
-          </span>
+                </div>
+            </div>
         </div>
-       
-      </div>
-    </div>
-  )
+        </Link>
+
+    )
 }

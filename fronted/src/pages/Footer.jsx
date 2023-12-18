@@ -1,5 +1,5 @@
 import React from 'react'
-import { Logo } from '../navbar/NavBar'
+import { Logo } from '../navbar/Navbar'
 export default function FooterFour() {
   return (
     <section className="relative overflow-hidden py-10 border-2  border-slate-100">
