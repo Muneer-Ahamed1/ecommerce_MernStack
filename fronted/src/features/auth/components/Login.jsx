@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
 import {LoginAsync} from "../authSlice"
  import { useDispatch,useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
  
 export default function Login() {
 const dispatch=useDispatch();
@@ -73,9 +73,9 @@ const dispatch=useDispatch();
                     Password
                   </label>
                   <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <Link to={"/forgotPassword"} className="font-semibold text-indigo-600 hover:text-indigo-500">
                       Forgot password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-2">

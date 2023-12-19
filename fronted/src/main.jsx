@@ -16,6 +16,8 @@ import Login from './features/auth/components/Login.jsx'
 import Protected from "./features/auth/components/Protected.jsx"
 import OrderSuccessPage from './pages/OrderSuccess.jsx'
 import UserOrders from './pages/UserOrders.jsx'
+import UserProfilePage from './pages/UserProfilePage.jsx'
+import ForgotPasswodPages from './pages/ForgotPasswodPages.jsx'
 
 
 
@@ -85,6 +87,20 @@ const router = createBrowserRouter([
           <Protected>
             <UserOrders/>
           </Protected>
+        )
+      },
+      {
+        path:"/userProfile",
+        element:(
+          <Protected>
+            <UserProfilePage/>
+            </Protected>
+        )
+      },
+      {
+        path:"/forgotPassword",
+        element:(
+            <ForgotPasswodPages/>
         )
       }
 

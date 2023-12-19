@@ -89,3 +89,21 @@ export const updateUser = (value) => {
     )
 
 }
+
+export const ForgotPassword=(email)=>{
+    let response;
+    let data;
+    return(
+        new Promise(async (resolve,reject)=>{
+            try{
+                console.log(email)
+                response=await axios.get(`http://localhost:8080/users?email=${email.email}`);
+                data=response.data[0];
+                resolve({data})
+            }
+            catch(e){
+                reject(e);
+            }
+        })
+    )
+}

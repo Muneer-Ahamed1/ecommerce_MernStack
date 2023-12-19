@@ -2341,28 +2341,18 @@
       "id": 1,
       "address": [
         {
-          "fullName": "sdadsas",
+          "fullName": "Muneer Ahamed Shaik",
           "email": "muneer.toney@gmail.com",
-          "country": "Indai",
-          "address": "sadsadsads",
-          "city": "city",
-          "pin": "2323123"
+          "city": "Guntur",
+          "pin": "2323123",
+          "address": "Pendanipadu gunture"
         },
         {
-          "fullName": "sdadsas",
-          "email": "muneer.toney@gmail.com",
-          "country": "Indai",
-          "address": "sadsadsads",
-          "city": "city",
-          "pin": "32233"
-        },
-        {
-          "fullName": "sdadsas",
-          "email": "muneer.toney@gmail.com",
-          "country": "Indai",
-          "address": "toney",
-          "city": "startk",
-          "pin": "321232"
+          "fullName": "Shaik Shakeel",
+          "email": "Shakeel@gmail.com",
+          "city": "citydsda",
+          "pin": "32233",
+          "address": "Shakeel parhuer"
         }
       ]
     },
@@ -2579,6 +2569,74 @@
       },
       "status": "pending",
       "id": 2
+    },
+    {
+      "totalCount": 1,
+      "totalPrice": 13,
+      "products": [
+        {
+          "title": "perfume Oil",
+          "description": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
+          "price": 13,
+          "discountPercentage": 8.4,
+          "rating": 4.26,
+          "stock": 65,
+          "brand": "Impression of Acqua Di Gio",
+          "category": "fragrances",
+          "thumbnail": "https://i.dummyjson.com/data/products/11/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/11/1.jpg",
+            "https://i.dummyjson.com/data/products/11/2.jpg",
+            "https://i.dummyjson.com/data/products/11/3.jpg",
+            "https://i.dummyjson.com/data/products/11/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 21
+        }
+      ],
+      "selectAddress": {
+        "fullName": "sdadsas",
+        "email": "muneer.toney@gmail.com",
+        "country": "Indai",
+        "address": "sadsadsads",
+        "city": "city",
+        "pin": "2323123"
+      },
+      "paymentMethod": "cash",
+      "user": {
+        "email": "muneer.toney@gmail.com",
+        "password": "123",
+        "id": 1,
+        "address": [
+          {
+            "fullName": "sdadsas",
+            "email": "muneer.toney@gmail.com",
+            "country": "Indai",
+            "address": "sadsadsads",
+            "city": "city",
+            "pin": "2323123"
+          },
+          {
+            "fullName": "sdadsas",
+            "email": "muneer.toney@gmail.com",
+            "country": "Indai",
+            "address": "sadsadsads",
+            "city": "city",
+            "pin": "32233"
+          },
+          {
+            "fullName": "sdadsas",
+            "email": "muneer.toney@gmail.com",
+            "country": "Indai",
+            "address": "toney",
+            "city": "startk",
+            "pin": "321232"
+          }
+        ]
+      },
+      "status": "pending",
+      "id": 3
     }
   ]
 }

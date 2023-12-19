@@ -432,7 +432,7 @@ export default function Checkout() {
                                                                 }
                                                             </div>
                                                         ) : (
-                                                            <h1 className=' text-xl font-medium '>Add some addresses</h1>
+                                                            <h1 className=' text-xl font-medium '>Add some </h1>
                                                         )
                                                     }
 
